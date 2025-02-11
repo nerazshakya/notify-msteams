@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
-        uses: nerazshakya/notify-msteams@main
+        uses: nerazshakya/notify-msteams@v1.0.0
         with:
           webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
           title: "New Deployment"
