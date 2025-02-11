@@ -1,0 +1,28 @@
+name: 'Notify Microsoft Teams'
+description: 'Send notifications to Microsoft Teams using webhooks and Adaptive Cards'
+author: 'nerazshakya'
+inputs:
+  webhook_url:
+    description: 'Microsoft Teams Webhook URL'
+    required: true
+  title:
+    description: 'Notification Title'
+    required: false
+  message:
+    description: 'Main Message'
+    required: true
+  status:
+    description: 'Status (Success, Failure, Warning)'
+    required: false
+    default: 'Info'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.webhook_url }}
+    - ${{ inputs.title }}
+    - ${{ inputs.message }}
+    - ${{ inputs.status }}
+branding:
+  icon: 'message-square'
+  color: 'blue'
