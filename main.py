@@ -24,7 +24,7 @@ def send_teams_notification():
     status = os.getenv('INPUT_STATUS', 'Unknown')  # Expected: Success, Failure, Skipped, Cancelled, etc.
     repo = os.getenv('GITHUB_REPOSITORY', 'Unknown Repo')
     branch = os.getenv('GITHUB_REF_NAME', 'Unknown Branch')
-    commit = os.getenv('GITHUB_SHA', '0076D7')[:7]  # Short commit hash
+    commit = os.getenv('GITHUB_SHA', 'Unknown')[:7]  # Short commit hash
     actor = os.getenv('GITHUB_ACTOR', 'Unknown User')
     event = os.getenv('GITHUB_EVENT_NAME', 'Unknown Event')
 
