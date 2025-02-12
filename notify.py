@@ -5,7 +5,7 @@ import datetime
 
 print("Arguments received:", sys.argv)  # Debugging line
 
-if len(sys.argv) < 10:  # Expecting at least 10 arguments
+if len(sys.argv) < 9:  # Expecting at least 9 arguments
     print("❌ Error: Not enough arguments provided.")
     print("Usage: python notify.py <webhook_url> <repo> <branch> <commit> <actor> <event> <title> <message> <status>")
     sys.exit(1)  # Exit with an error code
