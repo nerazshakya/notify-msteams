@@ -1,6 +1,6 @@
 name: 'Notify Microsoft Teams'
 description: 'Send GitHub Actions notifications to a Microsoft Teams channel using Adaptive Cards.'
-author: 'nerazshakya'
+author: 'Niraj Shakya'
 branding:
   icon: 'message-square'
   color: 'blue'
@@ -20,10 +20,6 @@ inputs:
     description: 'Build status (Success, Failure, Skipped, Cancelled, Unknown)'
     required: false
     default: 'Unknown'
-  theme_color:
-    description: 'Theme color for MessageCard (Not used in Adaptive Card, kept for backward compatibility)'
-    required: false
-    default: '0076D7'
   repository:
     description: 'GitHub Repository Name'
     required: false
@@ -52,7 +48,6 @@ runs:
     INPUT_TITLE: ${{ inputs.title }}
     INPUT_MESSAGE: ${{ inputs.message }}
     INPUT_STATUS: ${{ inputs.status }}
-    INPUT_THEME_COLOR: ${{ inputs.theme_color }}
     GITHUB_REPOSITORY: ${{ inputs.repository }}
     GITHUB_REF_NAME: ${{ inputs.ref_name }}
     GITHUB_SHA: ${{ inputs.commit_sha }}

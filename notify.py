@@ -116,5 +116,6 @@ if __name__ == "__main__":
     title = sys.argv[7]   # Notification title
     message = sys.argv[8] # Main message
     status = sys.argv[9]  # Status
+    color = sys.argv[10]
 
     send_teams_notification(webhook_url, repo, branch, commit, actor, event, title, message, status)
