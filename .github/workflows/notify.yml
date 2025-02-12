@@ -1,5 +1,6 @@
-name: Notify Teams
-on: 
+name: Teams Notification Test
+
+on:
   push:
     branches:
       - main
@@ -8,10 +9,17 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Notification
-        uses: nerazshakya/notify-msteams@main
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Send Teams Notification
+        uses: nerazshakya/notify-msteams@v1.0.8
         with:
-          webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          title: "New Deployment"
-          message: "A new change has been pushed to main."
+          webhook_url: ${{ secrets.TEAMS_WEBHOOK }}
+          message: "A new push was made to the repository."
           status: "Success"
+          repository: ${{ github.repository }}
+          ref_name: ${{ github.ref_name }}
+          commit_sha: ${{ github.sha }}
+          actor: ${{ github.actor }}
+          event_name: ${{ github.event_name }}

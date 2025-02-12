@@ -1,29 +1,49 @@
 name: 'Notify Microsoft Teams'
-description: 'Send notifications to Microsoft Teams using webhooks and Adaptive Cards'
+description: 'Send GitHub Actions notifications to a Microsoft Teams channel using Adaptive Cards.'
 author: 'nerazshakya'
+branding:
+  icon: 'message-square'
+  color: 'blue'
+
 inputs:
   webhook_url:
-    description: 'Microsoft Teams Webhook URL'
+    description: 'Microsoft Teams Incoming Webhook URL'
     required: true
   title:
-    description: 'Notification Title'
+    description: 'Title of the notification'
     required: false
+    default: 'GitHub Action Notification'
   message:
-    description: 'Main Message'
+    description: 'Main message of the notification'
     required: true
   status:
-    description: 'Status (Success, Failure, Skipped, Cancelled, Unknown)'
+    description: 'Build status (Success, Failure, Skipped, Cancelled, Unknown)'
     required: false
     default: 'Unknown'
   theme_color:
     description: 'Theme color for MessageCard (Not used in Adaptive Card, kept for backward compatibility)'
     required: false
-    default: '0076D7' 
+    default: '0076D7'
+  repository:
+    description: 'GitHub Repository Name'
+    required: false
+  ref_name:
+    description: 'Git Branch Name'
+    required: false
+  commit_sha:
+    description: 'Git Commit SHA'
+    required: false
+  actor:
+    description: 'GitHub Actor who triggered the workflow'
+    required: false
+  event_name:
+    description: 'GitHub Event Name'
+    required: false
 
-# GitHub-provided environment variables
 outputs:
   result:
     description: 'Result of the notification request'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -33,12 +53,8 @@ runs:
     INPUT_MESSAGE: ${{ inputs.message }}
     INPUT_STATUS: ${{ inputs.status }}
     INPUT_THEME_COLOR: ${{ inputs.theme_color }}
-    GITHUB_REPOSITORY: ${{ github.repository }}
-    GITHUB_REF_NAME: ${{ github.ref_name }}
-    GITHUB_SHA: ${{ github.sha }}
-    GITHUB_ACTOR: ${{ github.actor }}
-    GITHUB_EVENT_NAME: ${{ github.event_name }}
-
-branding:
-  icon: 'message-square'
-  color: 'blue'
+    GITHUB_REPOSITORY: ${{ inputs.repository }}
+    GITHUB_REF_NAME: ${{ inputs.ref_name }}
+    GITHUB_SHA: ${{ inputs.commit_sha }}
+    GITHUB_ACTOR: ${{ inputs.actor }}
+    GITHUB_EVENT_NAME: ${{ inputs.event_name }}
