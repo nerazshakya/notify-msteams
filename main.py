@@ -22,18 +22,17 @@ def send_teams_notification():
     title = os.getenv('INPUT_TITLE', 'GitHub Action Notification')
     message = os.getenv('INPUT_MESSAGE')
     status = os.getenv('INPUT_STATUS', 'Unknown')  # Expected: Success, Failure, Skipped, Cancelled, etc.
+
+    # Read GitHub-provided environment variables
     repo = os.getenv('GITHUB_REPOSITORY', 'Unknown Repo')
     branch = os.getenv('GITHUB_REF_NAME', 'Unknown Branch')
-    commit = os.getenv('GITHUB_SHA', 'Unknown')[:7]  # Short commit hash
+    commit = os.getenv('GITHUB_SHA', 'Unknown Commit')[:7]  # Short commit hash
     actor = os.getenv('GITHUB_ACTOR', 'Unknown User')
     event = os.getenv('GITHUB_EVENT_NAME', 'Unknown Event')
 
-        # Ensure required variables are provided
-    if not webhook_url:
-        raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
-
-    if not message:
-        raise ValueError("❌ Missing required input: 'INPUT_MESSAGE'.")
+    # Ensure required variables are provided
+    if not webhook_url or not message:
+        raise ValueError("❌ Missing required inputs: 'INPUT_WEBHOOK_URL' and 'INPUT_MESSAGE'.")
 
     # Select the correct icon for the status
     icon_url = f"{GITHUB_ICONS_URL}{STATUS_ICONS.get(status, 'unknown.png')}"
