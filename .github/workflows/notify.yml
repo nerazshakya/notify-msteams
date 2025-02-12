@@ -8,10 +8,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Get Changed Files
+        id: changed-files
+        run: |
+          echo "files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | tr '\n' ', ')" >> $GITHUB_ENV
+
       - name: Send Notification to Teams
         uses: nerazshakya/notify-msteams@main
         with:
           webhook_url: 'https://your-teams-webhook-url'
           title: 'Build Notification'
-          message: 'The latest build has completed successfully!'
-          status: 'Success'
+          status: ${{ job.status }}
+          files_changed: ${{ env.files }}

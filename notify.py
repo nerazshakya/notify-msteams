@@ -15,27 +15,35 @@ STATUS_ICONS = {
 }
 
 def send_teams_notification():
-    """Send an Adaptive Card notification to Microsoft Teams."""
-    
+    """Send an Adaptive Card notification to Microsoft Teams with full details."""
+
     # Read environment variables from GitHub Actions
     webhook_url = os.getenv('INPUT_WEBHOOK_URL')
     title = os.getenv('INPUT_TITLE', 'GitHub Action Notification')
-    message = os.getenv('INPUT_MESSAGE')
-    status = os.getenv('INPUT_STATUS', 'Unknown')  # Expected: Success, Failure, Skipped, Cancelled, etc.
-
-    # Read GitHub-provided environment variables
-    repo = os.getenv('GITHUB_REPOSITORY', 'Unknown Repo')
-    branch = os.getenv('GITHUB_REF_NAME', 'Unknown Branch')
-    commit = os.getenv('GITHUB_SHA', 'Unknown Commit')[:7]  # Short commit hash
+    status = os.getenv('INPUT_STATUS', 'Unknown')  # Expected: Success, Failure, Skipped, etc.
+    commit = os.getenv('GITHUB_SHA', 'Unknown')[:7]  # Short commit hash
     actor = os.getenv('GITHUB_ACTOR', 'Unknown User')
     event = os.getenv('GITHUB_EVENT_NAME', 'Unknown Event')
+    repo = os.getenv('GITHUB_REPOSITORY', 'Unknown Repo')
+    branch = os.getenv('GITHUB_REF_NAME', 'Unknown Branch')
+    commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message')
+    run_id = os.getenv('GITHUB_RUN_ID', '')
+    files_changed = os.getenv('INPUT_FILES_CHANGED', '')
 
     # Ensure required variables are provided
-    if not webhook_url or not message:
-        raise ValueError("❌ Missing required inputs: 'INPUT_WEBHOOK_URL' and 'INPUT_MESSAGE'.")
+    if not webhook_url:
+        raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
 
     # Select the correct icon for the status
     icon_url = f"{GITHUB_ICONS_URL}{STATUS_ICONS.get(status, 'unknown.png')}"
+
+    # GitHub links
+    repo_url = f"https://github.com/{repo}/tree/{branch}"
+    commit_url = f"https://github.com/{repo}/commit/{commit}"
+    build_url = f"https://github.com/{repo}/actions/runs/{run_id}"
+
+    # Parse file changes into a formatted list
+    files_list = [{"type": "TextBlock", "text": f"• {file.strip()}", "wrap": True} for file in files_changed.split(',') if file.strip()]
 
     # Construct Adaptive Card JSON
     adaptive_card = {
@@ -49,48 +57,43 @@ def send_teams_notification():
                     "version": "1.4",
                     "body": [
                         {
-                            "type": "Image",
-                            "url": icon_url,
-                            "size": "Medium",
-                            "horizontalAlignment": "Center"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": title,
-                            "weight": "Bolder",
-                            "size": "Large",
-                            "color": "Accent",
-                            "horizontalAlignment": "Center"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": message,
-                            "wrap": True,
-                            "horizontalAlignment": "Center"
-                        },
-                        {
-                            "type": "FactSet",
-                            "facts": [
-                                {"title": "Repository", "value": repo},
-                                {"title": "Branch", "value": branch},
-                                {"title": "Commit", "value": commit},
-                                {"title": "Actor", "value": actor},
-                                {"title": "Event", "value": event},
-                                {"title": "Status", "value": status}
+                            "type": "ColumnSet",
+                            "columns": [
+                                {
+                                    "type": "Column",
+                                    "width": "auto",
+                                    "items": [
+                                        {"type": "Image", "url": icon_url, "size": "Small", "style": "Person"}
+                                    ]
+                                },
+                                {
+                                    "type": "Column",
+                                    "width": "stretch",
+                                    "items": [
+                                        {"type": "TextBlock", "text": f"CI #{run_id} (commit {commit})", "weight": "Bolder", "size": "Medium"},
+                                        {"type": "TextBlock", "text": f"by @{actor} on {repo}", "isSubtle": True, "wrap": True}
+                                    ]
+                                }
                             ]
-                        }
+                        },
+                        {"type": "TextBlock", "text": f"**Event type:** `{event}`", "wrap": True},
+                        {"type": "TextBlock", "text": f"**Branch:** `{branch}`", "wrap": True},
+                        {"type": "TextBlock", "text": f"**Status:** `{status}`", "wrap": True, "color": "Attention"},
+                        {"type": "TextBlock", "text": f"**Commit message:** {commit_message}", "wrap": True},
+                        {"type": "TextBlock", "text": "**Files changed:**", "wrap": True} if files_list else None,
+                        *files_list,
                     ],
                     "actions": [
-                        {
-                            "type": "Action.OpenUrl",
-                            "title": "View Commit",
-                            "url": f"https://github.com/{repo}/commit/{commit}"
-                        }
+                        {"type": "Action.OpenUrl", "title": "View build/deploy status", "url": build_url},
+                        {"type": "Action.OpenUrl", "title": "Review commit diffs", "url": commit_url}
                     ]
                 }
             }
         ]
     }
+
+    # Remove None values (files list may be empty)
+    adaptive_card["attachments"][0]["content"]["body"] = [item for item in adaptive_card["attachments"][0]["content"]["body"] if item]
 
     # Send request to Teams Webhook
     headers = {'Content-Type': 'application/json'}

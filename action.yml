@@ -13,14 +13,13 @@ inputs:
     description: 'Notification Title'
     required: false
     default: 'GitHub Action Notification'
-  message:
-    description: 'Notification Message'
-    required: true
   status:
-    description: 'Build Status (Success, Failure, Skipped, Cancelled, Unknown)'
+    description: 'Status (Success, Failure, Skipped, Cancelled, Unknown)'
     required: false
     default: 'Unknown'
-
+  files_changed:
+    description: 'List of changed files'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
