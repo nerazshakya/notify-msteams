@@ -12,17 +12,33 @@ inputs:
     description: 'Main Message'
     required: true
   status:
-    description: 'Status (Success, Failure, Warning)'
+    description: 'Status (Success, Failure, Skipped, Cancelled, Unknown)'
     required: false
-    default: 'Info'
+    default: 'Unknown'
+  theme_color:
+    description: 'Theme color for MessageCard (Not used in Adaptive Card, kept for backward compatibility)'
+    required: false
+    default: '0076D7' 
+
+# GitHub-provided environment variables
+outputs:
+  result:
+    description: 'Result of the notification request'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.webhook_url }}
-    - ${{ inputs.title }}
-    - ${{ inputs.message }}
-    - ${{ inputs.status }}
+  env:
+    INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
+    INPUT_TITLE: ${{ inputs.title }}
+    INPUT_MESSAGE: ${{ inputs.message }}
+    INPUT_STATUS: ${{ inputs.status }}
+    INPUT_THEME_COLOR: ${{ inputs.theme_color }}
+    GITHUB_REPOSITORY: ${{ github.repository }}
+    GITHUB_REF_NAME: ${{ github.ref_name }}
+    GITHUB_SHA: ${{ github.sha }}
+    GITHUB_ACTOR: ${{ github.actor }}
+    GITHUB_EVENT_NAME: ${{ github.event_name }}
+
 branding:
   icon: 'message-square'
   color: 'blue'
