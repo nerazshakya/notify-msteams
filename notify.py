@@ -11,7 +11,8 @@ STATUS_ICONS = {
     "Failure": "failure.png",
     "Skipped": "skipped.png",
     "Cancelled": "cancelled.png",
-    "Unknown": "unknown.png"
+    "Unknown": "unknown.png",
+    "Person": "github-blue.png"
 }
 
 def send_teams_notification():
@@ -36,6 +37,7 @@ def send_teams_notification():
 
     # Select the correct icon for the status
     icon_url = f"{GITHUB_ICONS_URL}{STATUS_ICONS.get(status, 'unknown.png')}"
+
 
     # GitHub links
     repo_url = f"{github_url}/{repo}/tree/{branch}"
@@ -63,7 +65,9 @@ def send_teams_notification():
                                     "type": "Column",
                                     "width": "auto",
                                     "items": [
-                                        {"type": "Image", "url": icon_url, "size": "Small", "style": "Person"}
+                                        #{"type": "Image", "url": icon_url, "size": "Small", "style": "Person"}
+                                        {"type": "Image","style": "Person","url": "${creator.profileImage}","altText": "${creator.name}","size": "Small"}
+                                        
                                     ]
                                 },
                                 {
@@ -84,7 +88,7 @@ def send_teams_notification():
                         *files_list,
                     ],
                     "actions": [
-                        {"type": "Action.OpenUrl", "title": "View build/deploy status", "url": build_url},
+                        {"type": "Action.OpenUrl", "title": "Workflow Status", "url": build_url},
                         {"type": "Action.OpenUrl", "title": "Review commit diffs", "url": commit_url}
                     ]
                 }
