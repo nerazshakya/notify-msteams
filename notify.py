@@ -37,7 +37,7 @@ def send_teams_notification():
 
     # Select the correct icon for the status
     icon_url = f"{GITHUB_ICONS_URL}{STATUS_ICONS.get(status, 'unknown.png')}"
-    profile_image_url = 'https://corptb.sharepoint.com/_layouts/15/userphoto.aspx?size=S&username=' + {actor} +'@tbdir.net'
+    profile_image_url = f"https://corptb.sharepoint.com/_layouts/15/userphoto.aspx?size=S&username= + {actor} +'@tbdir.net"
 
 
     # GitHub links
