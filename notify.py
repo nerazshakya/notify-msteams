@@ -3,12 +3,12 @@ import sys
 import requests
 import datetime
 
-print("Arguments received:", sys.argv)  # Debugging line
+#print("Arguments received:", sys.argv)  # Debugging line
 
-if len(sys.argv) < 9:  # Expecting at least 9 arguments
-    print("❌ Error: Not enough arguments provided.")
-    print("Usage: python notify.py <webhook_url> <repo> <branch> <commit> <actor> <event> <title> <message> <status>")
-    sys.exit(1)  # Exit with an error code
+#if len(sys.argv) < 9:  # Expecting at least 9 arguments
+#    print("❌ Error: Not enough arguments provided.")
+#    print("Usage: python notify.py <webhook_url> <repo> <branch> <commit> <actor> <event> <title> <message> <status>")
+#    sys.exit(1)  # Exit with an error code
 
 # Base URL for icons hosted in the GitHub repository
 GITHUB_REPO_URL = "https://raw.githubusercontent.com/nerazshakya/notify-msteams/main/icons/"
