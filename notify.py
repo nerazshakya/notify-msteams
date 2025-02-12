@@ -65,8 +65,8 @@ def send_teams_notification():
                                     "type": "Column",
                                     "width": "auto",
                                     "items": [
-                                        #{"type": "Image", "url": icon_url, "size": "Small", "style": "Person"}
-                                        {"type": "Image","style": "Person","url": "${creator.profileImage}","altText": "${creator.name}","size": "Small"}
+                                        {"type": "Image", "url": icon_url, "size": "Small", "style": "Person"}
+                                        #{"type": "Image","style": "Person","url": "${creator.profileImage}","altText": "${creator.name}","size": "Small"}
                                         
                                     ]
                                 },
