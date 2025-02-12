@@ -1,31 +1,26 @@
-name: "Notify Microsoft Teams"
-description: "Send notifications to Microsoft Teams using Adaptive Cards."
-author: "nerazshakya"
+name: 'Notify Microsoft Teams'
+description: 'Send GitHub Actions notifications to Microsoft Teams using Adaptive Cards'
+author: 'nerazshakya'
 branding:
-  icon: "message-circle"
-  color: "blue"
+  icon: 'message-square'
+  color: 'blue'
 
 inputs:
   webhook_url:
-    description: "Microsoft Teams Incoming Webhook URL"
+    description: 'Microsoft Teams Incoming Webhook URL'
     required: true
   title:
-    description: "Notification title"
+    description: 'Notification Title'
     required: false
-    default: "GitHub Action Notification"
+    default: 'GitHub Action Notification'
   message:
-    description: "Notification message"
+    description: 'Notification Message'
     required: true
   status:
-    description: "Build status (Success, Failure, Skipped, Cancelled, Unknown)"
+    description: 'Build Status (Success, Failure, Skipped, Cancelled, Unknown)'
     required: false
-    default: "Unknown"
+    default: 'Unknown'
 
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  env:
-    INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
-    INPUT_TITLE: ${{ inputs.title }}
-    INPUT_MESSAGE: ${{ inputs.message }}
-    INPUT_STATUS: ${{ inputs.status }}
+  using: 'docker'
+  image: 'Dockerfile'

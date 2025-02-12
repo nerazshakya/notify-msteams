@@ -1,25 +1,17 @@
-name: Teams Notification Test
-
-on:
-  push:
-    branches:
-      - main
+name: Notify Teams on Build Status
+on: [push, pull_request]
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Send Teams Notification
-        uses: nerazshakya/notify-msteams@v1.0.8
+      - name: Send Notification to Teams
+        uses: nerazshakya/notify-msteams@main
         with:
-          webhook_url: ${{ secrets.TEAMS_WEBHOOK }}
-          message: "A new push was made to the repository."
-          status: "Success"
-          repository: ${{ github.repository }}
-          ref_name: ${{ github.ref_name }}
-          commit_sha: ${{ github.sha }}
-          actor: ${{ github.actor }}
-          event_name: ${{ github.event_name }}
+          webhook_url: 'https://your-teams-webhook-url'
+          title: 'Build Notification'
+          message: 'The latest build has completed successfully!'
+          status: 'Success'
