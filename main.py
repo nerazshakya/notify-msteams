@@ -28,9 +28,12 @@ def send_teams_notification():
     actor = os.getenv('GITHUB_ACTOR', 'Unknown User')
     event = os.getenv('GITHUB_EVENT_NAME', 'Unknown Event')
 
-    # Ensure required variables are provided
-    if not webhook_url or not message:
-        raise ValueError("❌ Missing required inputs: 'INPUT_WEBHOOK_URL' and 'INPUT_MESSAGE'.")
+        # Ensure required variables are provided
+    if not webhook_url:
+        raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
+
+    if not message:
+        raise ValueError("❌ Missing required input: 'INPUT_MESSAGE'.")
 
     # Select the correct icon for the status
     icon_url = f"{GITHUB_ICONS_URL}{STATUS_ICONS.get(status, 'unknown.png')}"

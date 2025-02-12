@@ -2,9 +2,8 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY notify.py .
-COPY requirements.txt .
+COPY main.py notify.py /app/
 
-RUN pip install -r requirements.txt
+RUN pip install requests
 
-ENTRYPOINT ["python", "/app/notify.py"]
+CMD ["python", "notify.py"]

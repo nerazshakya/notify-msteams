@@ -1,55 +1,31 @@
-name: 'Notify Microsoft Teams'
-description: 'Send GitHub Actions notifications to a Microsoft Teams channel using Adaptive Cards.'
-author: 'Niraj Shakya'
+name: "Notify Microsoft Teams"
+description: "Send notifications to Microsoft Teams using Adaptive Cards."
+author: "nerazshakya"
 branding:
-  icon: 'message-square'
-  color: 'blue'
+  icon: "message-circle"
+  color: "blue"
 
 inputs:
   webhook_url:
-    description: 'Microsoft Teams Incoming Webhook URL'
+    description: "Microsoft Teams Incoming Webhook URL"
     required: true
   title:
-    description: 'Title of the notification'
+    description: "Notification title"
     required: false
-    default: 'GitHub Action Notification'
+    default: "GitHub Action Notification"
   message:
-    description: 'Main message of the notification'
+    description: "Notification message"
     required: true
   status:
-    description: 'Build status (Success, Failure, Skipped, Cancelled, Unknown)'
+    description: "Build status (Success, Failure, Skipped, Cancelled, Unknown)"
     required: false
-    default: 'Unknown'
-  repository:
-    description: 'GitHub Repository Name'
-    required: false
-  ref_name:
-    description: 'Git Branch Name'
-    required: false
-  commit_sha:
-    description: 'Git Commit SHA'
-    required: false
-  actor:
-    description: 'GitHub Actor who triggered the workflow'
-    required: false
-  event_name:
-    description: 'GitHub Event Name'
-    required: false
-
-outputs:
-  result:
-    description: 'Result of the notification request'
+    default: "Unknown"
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
   env:
     INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
     INPUT_TITLE: ${{ inputs.title }}
     INPUT_MESSAGE: ${{ inputs.message }}
     INPUT_STATUS: ${{ inputs.status }}
-    GITHUB_REPOSITORY: ${{ inputs.repository }}
-    GITHUB_REF_NAME: ${{ inputs.ref_name }}
-    GITHUB_SHA: ${{ inputs.commit_sha }}
-    GITHUB_ACTOR: ${{ inputs.actor }}
-    GITHUB_EVENT_NAME: ${{ inputs.event_name }}
