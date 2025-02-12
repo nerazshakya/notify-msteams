@@ -21,5 +21,12 @@ inputs:
     description: 'List of changed files'
     required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "composite"
+  steps:
+    - name: Install Python Dependencies
+      shell: bash
+      run: pip install -r requirements.txt
+
+    - name: Run Notification Script
+      shell: bash
+      run: python notify.py
