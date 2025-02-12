@@ -29,7 +29,7 @@ def send_teams_notification():
     commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message')
     run_id = os.getenv('GITHUB_RUN_ID', '')
     files_changed = os.getenv('INPUT_FILES_CHANGED', '')
-
+    github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
     # Ensure required variables are provided
     if not webhook_url:
         raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
@@ -38,9 +38,9 @@ def send_teams_notification():
     icon_url = f"{GITHUB_ICONS_URL}{STATUS_ICONS.get(status, 'unknown.png')}"
 
     # GitHub links
-    repo_url = f"https://github.com/{repo}/tree/{branch}"
-    commit_url = f"https://github.com/{repo}/commit/{commit}"
-    build_url = f"https://github.com/{repo}/actions/runs/{run_id}"
+    repo_url = f"{github_url}/{repo}/tree/{branch}"
+    commit_url = f"{github_url}/{repo}/commit/{commit}"
+    build_url = f"{github_url}/{repo}/actions/runs/{run_id}"
 
     # Parse file changes into a formatted list
     files_list = [{"type": "TextBlock", "text": f"• {file.strip()}", "wrap": True} for file in files_changed.split(',') if file.strip()]
