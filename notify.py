@@ -64,7 +64,7 @@ def send_teams_notification():
         "content": {
             "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
             "type": "AdaptiveCard",
-            "version": "1.5",
+            "version": "1.6",
             "body": [
                 {
                     "type": "TextBlock",
@@ -90,14 +90,14 @@ def send_teams_notification():
                 {
                     "type": "FactSet",
                     "separator": True,
-                    "spacing": "padding",
+                    "spacing": "Padding",
                     "facts": [
-                        {"title": "Environment", "value": f"{environ.capitalize()}", },
-                        {"title": "Application", "value": f"{app.capitalize()}"},
-                        {"title": "Stage", "value": f"{stage.capitalize()}"},
+                        {"title": "Environment", "value": f"{environ.upper()}", },
+                        {"title": "Application", "value": f"{app.upper()}"},
+                        {"title": "Stage", "value": f"{stage.upper()}"},
                         {"title": "Event Type", "value": f"{event.capitalize()}"},
                         {"title": "Branch", "value": f"{branch}"},
-                        {"title": "Status", "value": f"{status}"},
+                        {"title": "Status", "value": f"{status.capitalize()}"},
                         {"title": "Message", "value": f"{commit_message}"}
                     ]
                 },
