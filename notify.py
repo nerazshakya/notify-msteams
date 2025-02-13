@@ -32,6 +32,8 @@ def send_teams_notification():
     files_changed = os.getenv('INPUT_FILES_CHANGED', '')
     github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
     # Ensure required variables are provided
+    print(f"DEBUG: INPUT_WEBHOOK_URL = {webhook_url}")
+    print(f"DEBUG: INPUT_MESSAGE = {title}")
     if not webhook_url:
         raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
 
@@ -66,7 +68,8 @@ def send_teams_notification():
                                     "type": "Column",
                                     "width": "auto",
                                     "items": [
-                                        {"type": "Image", "url": icon_url, "size": "Small", "style": "Person"}
+                                        {"type": "Image", "url": icon_url, "size": "Small", "style": "Person"},
+                                        {"type": "TextBlock", "text": f"{title}", "weight": "Bolder", "size": "Large"},
                                         #{"type": "Image","style": "Person","url": "${creator.profileImage}","altText": "${creator.name}","size": "Small"}
                                         
                                     ]
@@ -89,6 +92,7 @@ def send_teams_notification():
                         *files_list,
                     ],
                     "actions": [
+                        {"type": "Action.OpenUrl", "title": "Repository", "url": repo_url},
                         {"type": "Action.OpenUrl", "title": "Workflow Status", "url": build_url},
                         {"type": "Action.OpenUrl", "title": "Review commit diffs", "url": commit_url}
                     ]
