@@ -25,8 +25,8 @@ runs:
   steps:
     - name: Install Python Dependencies
       shell: bash
-      run: pip install -r "${{ env.GITHUB_ACTION_PATH }}/requirements.txt"
+      run: pip install -r "${{ github.action_path }}/requirements.txt"
 
     - name: Run Notification Script
       shell: bash
-      run: python "${{ env.GITHUB_ACTION_PATH }}/notify.py"
+      run: python "${{ github.action_path }}/notify.py"
