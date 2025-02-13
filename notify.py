@@ -90,7 +90,7 @@ def send_teams_notification():
                 {
                     "type": "FactSet",
                     "separator": True,
-                    "spacing": "none",
+                    "spacing": "padding",
                     "facts": [
                         {"title": "Environment", "value": f"{environ.capitalize()}", },
                         {"title": "Application", "value": f"{app.capitalize()}"},
