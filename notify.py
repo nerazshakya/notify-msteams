@@ -75,9 +75,9 @@ def send_teams_notification():
                                     "type": "Column",
                                     "width": "stretch",
                                     "items": [
-                                        {"type": "TextBlock", "text": f"{title}", "weight": "Bolder", "size": "Large"},
-                                        {"type": "TextBlock", "text": f"CI #{run_id} (commit {commit})", "weight": "Bolder", "size": "Medium"},
-                                        {"type": "TextBlock", "text": f"by @{actor} on {repo}", "isSubtle": True, "wrap": True}
+                                        {"type": "TextBlock", "text": f"{title}", "weight": "Bolder", "size": "Medium"},
+                                        {"type": "TextBlock", "text": f"ID {run_id} (Commit {commit})", "weight": "Bolder", "size": "small"},
+                                        {"type": "TextBlock", "text": f"By @{actor} on {repo}", "isSubtle": True, "wrap": True}
                                     ]
                                 }
                             ]
