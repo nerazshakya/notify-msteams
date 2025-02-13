@@ -89,8 +89,10 @@ def send_teams_notification():
                 },
                 {
                     "type": "FactSet",
+                    "separator": True,
+                    "spacing": "none",
                     "facts": [
-                        {"title": "Environment", "value": f"{environ.capitalize()}"},
+                        {"title": "Environment", "value": f"{environ.capitalize()}", },
                         {"title": "Application", "value": f"{app.capitalize()}"},
                         {"title": "Stage", "value": f"{stage.capitalize()}"},
                         {"title": "Event Type", "value": f"{event.capitalize()}"},
