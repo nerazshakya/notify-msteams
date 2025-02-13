@@ -1,0 +1,72 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.5",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "medium",
+            "weight": "bolder",
+            "text": "${title}",
+            "spacing": "none"
+        },
+        {
+            "type": "TextBlock",
+            "size": "Small",
+            "text": "ID {run_id} (Commit {commit})",
+            "spacing": "None"
+        },
+        {
+            "type": "TextBlock",
+            "size": "Small",
+            "weight": "Bolder",
+            "text": "By @{actor} on {current_time}",
+            "spacing": "None"
+        },
+        
+        {
+            "type": "FactSet",
+            "facts": [
+                {
+                    "title": "${properties[0].key}",
+                    "value": "${properties[0].value}"
+                },
+                {
+                    "title": "${properties[1].key}",
+                    "value": "${properties[1].value}"
+                },
+                {
+                    "title": "${properties[2].key}",
+                    "value": "${properties[2].value}"
+                },
+                {
+                    "title": "${properties[3].key}",
+                    "value": "${properties[3].value}"
+                }
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Repository",
+                    "style": "positive",
+                    "url": "https://github.com/repo"
+                },
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Workflow Status",
+                    "style": "positive",
+                    "url": "https://github.com/status"
+                },
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Review Diffs",
+                    "style": "positive",
+                    "url": "https://github.com/sdiffs"
+                }
+            ]
+        }
+    ]
+}

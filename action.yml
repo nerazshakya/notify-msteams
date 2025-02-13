@@ -2,7 +2,7 @@ name: 'Notify Microsoft Teams'
 description: 'Send GitHub Actions notifications to Microsoft Teams using Adaptive Cards'
 author: 'nerazshakya'
 branding:
-  icon: 'message-square'
+  icon: 'bell'
   color: 'blue'
 
 inputs:
@@ -20,6 +20,7 @@ inputs:
   files_changed:
     description: 'List of changed files'
     required: false
+
 runs:
   using: "composite"
 

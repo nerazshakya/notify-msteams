@@ -36,6 +36,8 @@ def send_teams_notification():
     run_id = os.getenv('GITHUB_RUN_ID', '')
     files_changed = os.getenv('INPUT_FILES_CHANGED', '')
     github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
+    show_on_start = os.getenv('INPUT_SHOW-ON-START', 'true').lower() != 'false'
+    show_on_exit = os.getenv('INPUT_SHOW-ON-EXIT', 'true').lower() != 'false'
     # Ensure required variables are provided
     if not webhook_url:
         raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
@@ -55,54 +57,49 @@ def send_teams_notification():
 
     # Construct Adaptive Card JSON
     adaptive_card = {
-        "type": "message",
-        "attachments": [
-            {
-                "contentType": "application/vnd.microsoft.card.adaptive",
-                "content": {
-                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                    "type": "AdaptiveCard",
-                    "version": "1.4",
-                    "body": [
-                        {
-                            "type": "ColumnSet",
-                            "columns": [
-                                {
-                                    "type": "Column",
-                                    "width": "auto",
-                                    "items": [
-                                        {"type": "Image", "url": icon_url, "size": "Small", "style": "Person"},
-                                        #{"type": "Image","style": "Person","url": "${creator.profileImage}","altText": "${creator.name}","size": "Small"}
-                                        
-                                    ]
-                                },
-                                {
-                                    "type": "Column",
-                                    "width": "stretch",
-                                    "items": [
-                                        {"type": "TextBlock", "text": f"{title}", "weight": "Bolder", "size": "Medium"},
-                                        {"type": "TextBlock", "text": f"ID {run_id} (Commit {commit})", "weight": "Bolder", "size": "small"},
-                                        {"type": "TextBlock", "text": f"By @{actor} on {current_time}", "isSubtle": True, "wrap": True}
-                                    ]
-                                }
-                            ]
-                        },
-                        {"type": "TextBlock", "text": f"**Event type:** `{event}`", "wrap": True},
-                        {"type": "TextBlock", "text": f"**Branch:** `{branch}`", "wrap": True},
-                        {"type": "TextBlock", "text": f"**Status:** `{status}`", "wrap": True, "color": "Attention"},
-                        {"type": "TextBlock", "text": f"**Commit message:** {commit_message}", "wrap": True},
-                        {"type": "TextBlock", "text": "**Files changed:**", "wrap": True} if files_list else None,
-                        *files_list,
-                    ],
-                    "actions": [
-                        {"type": "Action.OpenUrl", "title": "Repository", "url": repo_url},
-                        {"type": "Action.OpenUrl", "title": "Workflow Status", "url": build_url},
-                        {"type": "Action.OpenUrl", "title": "Review Diffs", "url": commit_url}
+    "type": "message",
+    "attachments": [{
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "content": {
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "type": "AdaptiveCard",
+            "version": "1.5",
+            "body": [
+                {
+                    "type": "TextBlock",
+                    "size": "medium",
+                    "weight": "bolder",
+                    "text": f"{title}",
+                    "spacing": "none"
+                },
+                {
+                    "type": "TextBlock",
+                    "size": "small",
+                    "weight": "bolder",
+                    "text": f"ID {run_id} (Commit {commit})",
+                    "spacing": "none"
+                },
+                {
+                    "type": "TextBlock",
+                    "size": "small",
+                    "weight": "bolder",
+                    "text": f"By @{actor} on {current_time}",
+                    "spacing": "none"
+                },
+                {
+                    "type": "FactSet",
+                    "facts": [
+                        {"title": "Event Type", "value": f"{event}"},
+                        {"title": "Branch", "value": f"{branch}"},
+                        {"title": "Status", "value": f"{status}"},
+                        {"title": "Message", "value": f"{commit_message}"}
                     ]
                 }
-            }
-        ]
-    }
+            ]
+        }
+    }]
+}
+    
 
     # Remove None values (files list may be empty)
     adaptive_card["attachments"][0]["content"]["body"] = [item for item in adaptive_card["attachments"][0]["content"]["body"] if item]
