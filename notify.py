@@ -17,7 +17,7 @@ STATUS_ICONS = {
     "Skipped": "skipped.png",
     "Cancelled": "cancelled.png",
     "Unknown": "unknown.png",
-    "Person": "github-blue.png"
+    "Person": "github.png"
 }
 
 def send_teams_notification():
@@ -67,6 +67,10 @@ def send_teams_notification():
             "version": "1.6",
             "body": [
                 {
+                    "type": "Container",
+                    "items": [
+                
+                {
                     "type": "TextBlock",
                     "size": "medium",
                     "weight": "bolder",
@@ -100,7 +104,12 @@ def send_teams_notification():
                         {"title": "Status", "value": f"{status.capitalize()}"},
                         {"title": "Message", "value": f"{commit_message}"}
                     ]
-                },
+                }
+                    ]},
+                {
+                    "type": "Container",
+                    "items": [
+                
                 {
                     "type": "ActionSet",
                     "actions": [
@@ -109,6 +118,7 @@ def send_teams_notification():
                         {"type": "Action.OpenUrl","title": "Review Diffs","style": "positive","url": commit_url}
                     ]
                 }
+                    ]}
             ]
         }
     }]
