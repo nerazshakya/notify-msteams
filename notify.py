@@ -92,7 +92,7 @@ def send_teams_notification():
                     "actions": [
                         {"type": "Action.OpenUrl", "title": "Repository", "url": repo_url},
                         {"type": "Action.OpenUrl", "title": "Workflow Status", "url": build_url},
-                        {"type": "Action.OpenUrl", "title": "Review commit diffs", "url": commit_url}
+                        {"type": "Action.OpenUrl", "title": "Review Diffs", "url": commit_url}
                     ]
                 }
             }
