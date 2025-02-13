@@ -1,9 +1,14 @@
 import json
 import requests
 import os
-
+import pytz
+import datetime
 # GitHub Raw URL for hosting icons
 GITHUB_ICONS_URL = "https://raw.githubusercontent.com/nerazshakya/notify-msteams/main/icons/"
+local_timezone = datetime.datetime.now().astimezone().tzinfo
+
+# Format time for display
+current_time = datetime.datetime.now(local_timezone).strftime('%Y-%m-%d %H:%M:%S %Z')
 
 # Status-based icons mapping
 STATUS_ICONS = {
@@ -77,7 +82,7 @@ def send_teams_notification():
                                     "items": [
                                         {"type": "TextBlock", "text": f"{title}", "weight": "Bolder", "size": "Medium"},
                                         {"type": "TextBlock", "text": f"ID {run_id} (Commit {commit})", "weight": "Bolder", "size": "small"},
-                                        {"type": "TextBlock", "text": f"By @{actor} on {repo}", "isSubtle": True, "wrap": True}
+                                        {"type": "TextBlock", "text": f"By @{actor} on {current_time}", "isSubtle": True, "wrap": True}
                                     ]
                                 }
                             ]
