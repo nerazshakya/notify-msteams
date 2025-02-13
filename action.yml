@@ -2,8 +2,8 @@ name: 'Notify Microsoft Teams'
 description: 'Send GitHub Actions notifications to Microsoft Teams using Adaptive Cards'
 author: 'nerazshakya'
 branding:
-  icon: 'bell'
-  color: 'blue'
+  icon: 'message-square'
+  color: 'green'
 
 inputs:
   webhook_url:
@@ -20,6 +20,16 @@ inputs:
   files_changed:
     description: 'List of changed files'
     required: false
+  environ: 
+    description: 'Environment (e.g. dev, uat, prod)'
+    required: false
+  stage:
+    description: 'Stage (e.g. build, test, deploy)'
+    required: false
+  app:
+    description: 'Application Name (Your applcation name)'
+    required: false
+
 
 runs:
   using: "composite"
@@ -32,6 +42,9 @@ runs:
         INPUT_TITLE: ${{ inputs.title }}
         INPUT_STATUS: ${{ inputs.status }}
         INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
+        INPUT_ENVIRON: ${{ inputs.environ }}
+        INPUT_STAGE: ${{ inputs.stage }}
+        INPUT_APP: ${{inputs.app}}
       run: pip install -r "$GITHUB_ACTION_PATH/requirements.txt"
 
     - name: Run Notification Script
@@ -40,5 +53,8 @@ runs:
         INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
         INPUT_TITLE: ${{ inputs.title }}
         INPUT_STATUS: ${{ inputs.status }}
-        INPUT_FILES_CHANGED: ${{ inputs.files_changed }}      
+        INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
+        INPUT_ENVIRON: ${{inputs.environ}}
+        INPUT_STAGE: ${{ inputs.stage }}
+        INPUT_APP: ${{inputs.app}}      
       run: python "$GITHUB_ACTION_PATH/notify.py"

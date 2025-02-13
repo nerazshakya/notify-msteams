@@ -36,8 +36,9 @@ def send_teams_notification():
     run_id = os.getenv('GITHUB_RUN_ID', '')
     files_changed = os.getenv('INPUT_FILES_CHANGED', '')
     github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
-    show_on_start = os.getenv('INPUT_SHOW-ON-START', 'true').lower() != 'false'
-    show_on_exit = os.getenv('INPUT_SHOW-ON-EXIT', 'true').lower() != 'false'
+    environ = os.getenv('INPUT_ENVIRON')
+    stage = os.getenv('INPUT_STAGE')
+    app = os.getenv('INPUT_APP')
     # Ensure required variables are provided
     if not webhook_url:
         raise ValueError("❌ Missing required input: 'INPUT_WEBHOOK_URL'.")
@@ -76,7 +77,7 @@ def send_teams_notification():
                     "type": "TextBlock",
                     "size": "small",
                     "weight": "bolder",
-                    "text": f"ID {run_id} (Commit {commit})",
+                    "text": f"Run ID {run_id} (Commit {commit})",
                     "spacing": "none"
                 },
                 {
@@ -89,10 +90,21 @@ def send_teams_notification():
                 {
                     "type": "FactSet",
                     "facts": [
-                        {"title": "Event Type", "value": f"{event}"},
+                        {"title": "Environment", "value": f"{environ.capitalize}"},
+                        {"title": "Application", "value": f"{app.capitalize}"},
+                        {"title": "Stage", "value": f"{stage.capitalize}"},
+                        {"title": "Event Type", "value": f"{event.capitalize}"},
                         {"title": "Branch", "value": f"{branch}"},
                         {"title": "Status", "value": f"{status}"},
                         {"title": "Message", "value": f"{commit_message}"}
+                    ]
+                },
+                {
+                    "type": "ActionSet",
+                    "actions": [
+                        {"type": "Action.OpenUrl","title": "Repository","style": "positive","url": repo_url},
+                        {"type": "Action.OpenUrl","title": "Workflow Status","style": "positive","url": build_url},
+                        {"type": "Action.OpenUrl","title": "Review Diffs","style": "positive","url": commit_url}
                     ]
                 }
             ]
