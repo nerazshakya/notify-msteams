@@ -22,11 +22,22 @@ inputs:
     required: false
 runs:
   using: "composite"
+
   steps:
     - name: Install Python Dependencies
       shell: bash
+      env:
+        INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
+        INPUT_TITLE: ${{ inputs.title }}
+        INPUT_STATUS: ${{ inputs.status }}
+        INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
       run: pip install -r "$GITHUB_ACTION_PATH/requirements.txt"
 
     - name: Run Notification Script
       shell: bash
+      env:
+        INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
+        INPUT_TITLE: ${{ inputs.title }}
+        INPUT_STATUS: ${{ inputs.status }}
+        INPUT_FILES_CHANGED: ${{ inputs.files_changed }}      
       run: python "$GITHUB_ACTION_PATH/notify.py"
