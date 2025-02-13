@@ -90,10 +90,10 @@ def send_teams_notification():
                 {
                     "type": "FactSet",
                     "facts": [
-                        {"title": "Environment", "value": f"{environ.capitalize}"},
-                        {"title": "Application", "value": f"{app.capitalize}"},
-                        {"title": "Stage", "value": f"{stage.capitalize}"},
-                        {"title": "Event Type", "value": f"{event.capitalize}"},
+                        {"title": "Environment", "value": f"{environ.capitalize()}"},
+                        {"title": "Application", "value": f"{app.capitalize()}"},
+                        {"title": "Stage", "value": f"{stage.capitalize()}"},
+                        {"title": "Event Type", "value": f"{event.capitalize()}"},
                         {"title": "Branch", "value": f"{branch}"},
                         {"title": "Status", "value": f"{status}"},
                         {"title": "Message", "value": f"{commit_message}"}
