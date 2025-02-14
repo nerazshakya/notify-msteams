@@ -29,9 +29,6 @@ inputs:
   app:
     description: 'Application Name (Your applcation name)'
     required: false
-  message:
-    description: 'Notification Message'
-    required: false
 
 
 runs:
@@ -48,7 +45,6 @@ runs:
         INPUT_ENVIRON: ${{ inputs.environ }}
         INPUT_STAGE: ${{ inputs.stage }}
         INPUT_APP: ${{inputs.app}}
-        INPUT_MESSAGE: ${{ inputs.message }}
       run: pip install -r "$GITHUB_ACTION_PATH/requirements.txt"
 
     - name: Run Notification Script
@@ -60,6 +56,5 @@ runs:
         INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
         INPUT_ENVIRON: ${{inputs.environ}}
         INPUT_STAGE: ${{ inputs.stage }}
-        INPUT_APP: ${{inputs.app}}
-        INPUT_MESSAGE: ${{ inputs.message }}      
+        INPUT_APP: ${{inputs.app}}     
       run: python "$GITHUB_ACTION_PATH/notify.py"
