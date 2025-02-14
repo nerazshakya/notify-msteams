@@ -57,7 +57,7 @@ def send_teams_notification():
     build_url = f"{github_url}/{repo}/actions/runs/{run_id}"
 
     # Parse file changes into a formatted list
-    files_list = [{"type": "TextBlock", "text": f"• {file.strip()}", "wrap": True} for file in files_changed.split(',') if file.strip()]
+    #files_list = [{"type": "TextBlock", "text": f"• {file.strip()}", "wrap": True} for file in files_changed.split(',') if file.strip()]
 
     # Construct Adaptive Card JSON
     adaptive_card = {
@@ -109,22 +109,6 @@ def send_teams_notification():
                     ]
                 }
                     ]},
-                
-                {
-                    "type": "Container",
-                    "items": [
-                {
-                        "type": "TextBlock",
-                        "text": "Files changed:",
-                        "wrap": True,
-                        "color": "Accent",
-                        "size": "Default"
-                    }
-                    if files_list else
-                        None,
-                         * files_list,
-                        ]},
-                
                 
                 {
                     "type": "Container",
