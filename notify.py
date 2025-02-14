@@ -81,7 +81,7 @@ def send_teams_notification():
                     "type": "TextBlock",
                     "size": "small",
                     "weight": "bolder",
-                    "text": f"Run ID {run_id} (Commit {commit})",
+                    "text": f"RUN ID #{run_id} (Commit {commit})",
                     "spacing": "none"
                 },
                 {
