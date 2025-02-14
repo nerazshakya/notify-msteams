@@ -32,7 +32,7 @@ def send_teams_notification():
     event = os.getenv('GITHUB_EVENT_NAME', 'Unknown Event')
     repo = os.getenv('GITHUB_REPOSITORY', 'Unknown Repo')
     branch = os.getenv('GITHUB_REF_NAME', 'Unknown Branch')
-    commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message')
+    commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message found')
     run_id = os.getenv('GITHUB_RUN_ID', '')
     files_changed = os.getenv('INPUT_FILES_CHANGED', '')
     github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
