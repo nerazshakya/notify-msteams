@@ -123,7 +123,7 @@ def send_teams_notification():
                     if files_list else
                         None,
                          * files_list,
-                        ]}
+                        ]},
                 
                 
                 {
