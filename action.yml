@@ -17,9 +17,9 @@ inputs:
     description: 'Status (Success, Failure, Skipped, Cancelled, Unknown)'
     required: false
     default: 'Unknown'
-  files_changed:
-    description: 'List of changed files'
-    required: false
+  #files_changed:
+  # description: 'List of changed files'
+    #required: false
   environ: 
     description: 'Environment (e.g. dev, uat, prod)'
     required: false
@@ -41,7 +41,7 @@ runs:
         INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
         INPUT_TITLE: ${{ inputs.title }}
         INPUT_STATUS: ${{ inputs.status }}
-        INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
+        #INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
         INPUT_ENVIRON: ${{ inputs.environ }}
         INPUT_STAGE: ${{ inputs.stage }}
         INPUT_APP: ${{inputs.app}}
@@ -53,7 +53,7 @@ runs:
         INPUT_WEBHOOK_URL: ${{ inputs.webhook_url }}
         INPUT_TITLE: ${{ inputs.title }}
         INPUT_STATUS: ${{ inputs.status }}
-        INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
+        #INPUT_FILES_CHANGED: ${{ inputs.files_changed }}
         INPUT_ENVIRON: ${{inputs.environ}}
         INPUT_STAGE: ${{ inputs.stage }}
         INPUT_APP: ${{inputs.app}}     
