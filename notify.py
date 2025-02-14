@@ -99,9 +99,9 @@ def send_teams_notification():
                         {"title": "Environment", "value": f"{environ.upper()}", },
                         {"title": "Application", "value": f"{app.upper()}"},
                         {"title": "Stage", "value": f"{stage.upper()}"},
-                        {"title": "Event Type", "value": f"{event.capitalize()}"},
+                        {"title": "Event Type", "value": f"{event.upper()}"},
                         {"title": "Branch", "value": f"{branch}"},
-                        {"title": "Status", "value": f"{status.capitalize()}"},
+                        {"title": "Status", "value": f"{status.upper()}"},
                         {"title": "Commit Message", "value": f"{commit_message}"}
                     ]
                 }
