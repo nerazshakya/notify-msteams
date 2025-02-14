@@ -3,6 +3,7 @@ import requests
 import os
 import pytz
 import datetime
+import subprocess
 # GitHub Raw URL for hosting icons
 GITHUB_ICONS_URL = "https://raw.githubusercontent.com/nerazshakya/notify-msteams/main/icons/"
 local_timezone = datetime.datetime.now().astimezone().tzinfo
@@ -32,7 +33,8 @@ def send_teams_notification():
     event = os.getenv('GITHUB_EVENT_NAME', 'Unknown Event')
     repo = os.getenv('GITHUB_REPOSITORY', 'Unknown Repo')
     branch = os.getenv('GITHUB_REF_NAME', 'Unknown Branch')
-    commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message found')
+    #commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message found')
+    commit_message = subprocess.check_output(['git', 'log', '-1', '--pretty=%B']).decode('utf-8').strip()
     run_id = os.getenv('GITHUB_RUN_ID', '')
     files_changed = os.getenv('INPUT_FILES_CHANGED', '')
     github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
