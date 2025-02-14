@@ -36,7 +36,8 @@ def send_teams_notification():
     #commit_message = os.getenv('GITHUB_COMMIT_MESSAGE', 'No commit message found')
     commit_message = subprocess.check_output(['git', 'log', '-1', '--pretty=%B']).decode('utf-8').strip()
     run_id = os.getenv('GITHUB_RUN_ID', '')
-    files_changed = os.getenv('INPUT_FILES_CHANGED', '')
+    #files_changed = os.getenv('INPUT_FILES_CHANGED', '')
+    files_changed = subprocess.check_output(['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD']).decode('utf-8').strip().split("\n")
     github_url = os.getenv('GITHUB_SERVER_URL','https://github.com')
     environ = os.getenv('INPUT_ENVIRON')
     stage = os.getenv('INPUT_STAGE')
@@ -108,6 +109,23 @@ def send_teams_notification():
                     ]
                 }
                     ]},
+                
+                {
+                    "type": "Container",
+                    "items": [
+                {
+                        "type": "TextBlock",
+                        "text": "Files changed:",
+                        "wrap": True,
+                        "color": "Accent",
+                        "size": "Default"
+                    }
+                    if files_list else
+                        None,
+                         * files_list,
+                        ]}
+                
+                
                 {
                     "type": "Container",
                     "items": [
