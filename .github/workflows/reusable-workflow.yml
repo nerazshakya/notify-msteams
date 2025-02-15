@@ -1,7 +1,7 @@
 name: Reusable Teams Notification Workflow
 
 on:
-  workflow_call:
+    workflow_call:
     inputs:
       message:
         required: true
@@ -16,7 +16,7 @@ on:
         type: string
         default: "basic"
         description: "Type of card template to use (basic, detailed, error)"
-    secrets:
+      secrets:
       TEAMS_WEBHOOK_URL:
         required: true
       PAT_TOKEN:
