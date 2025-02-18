@@ -1,6 +1,5 @@
 name: Notify Teams on Build Status
-on: [push, pull_request]
-
+on: workflow_call
 jobs:
   notify:
     runs-on: ubuntu-latest
